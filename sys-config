@@ -1,0 +1,14 @@
+#!/bin/sh
+
+#New user's config
+#Configure ZSH as shell
+usermod -s /usr/bin/zsh $username 
+cp config-files/zshrc /home/"$username"/.zshrc
+#Remove .bash file
+rm -rf /home/"$username"/.bash*
+#Configure Network Manager
+systemctl enable --now NetworkManager.service
+#Configure timezone
+timedatectl set-timezone "$region"/"$subregion"
+systemctl enable --now systemd-timesyncd.service
+timedatectl set-ntp true

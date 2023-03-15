@@ -1,0 +1,16 @@
+#!/bin/sh
+
+#Microcode
+if lscpu | grep "GenuineIntel"; then
+	apt install -y intel-microcode dkms initramfs-tools build-essential
+	apt install -y amd-microcode dkms initramfs-tools build-essential
+elif lscpu | grep "AuthenticAMD"; then
+fi
+#Internet Utils
+sudo apt install -y jq aria2 network-manager
+#Test editors
+sudo apt install micro
+link=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest | jq '.assets[0]' | jq '.browser_download_url')
+aria2c --out='neovim.deb' ${link:1:-1}
+#Shell
+sudo apt install -y zsh zsh-common zsh-autosuggestions zsh-doc zsh-syntax-highlighting
